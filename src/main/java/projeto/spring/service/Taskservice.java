@@ -23,4 +23,11 @@ public class Taskservice {
         return taskRepository.save(task);
 
     }
+     public Task deletar(String id) {
+        if (id != null) {
+            taskRepository.deleteById(id);
+        }
+        return null;
+
+    }
 }

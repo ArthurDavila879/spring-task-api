@@ -26,4 +26,9 @@ public class TaskController {
     public Task salvar(@RequestBody Task task){
         return taskservice.salvar(task);
     }
+    @DeleteMapping("/{id}")
+    public Task deletar(@PathVariable String id){
+        taskservice.deletar(id);
+        return null;
+    }
 }
