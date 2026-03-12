@@ -22,4 +22,8 @@ public class TaskController {
     public List<Task> listar() {
         return taskservice.listar();
     }
+       @PostMapping
+    public Task salvar(@RequestBody Task task){
+        return taskservice.salvar(task);
+    }
 }

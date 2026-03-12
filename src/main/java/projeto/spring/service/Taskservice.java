@@ -18,4 +18,9 @@ public class Taskservice {
     public List<Task> listar() {
         return taskRepository.findAll();
     }
+      public Task salvar(Task task) {
+        task.setCreatedAt(LocalDateTime.now());
+        return taskRepository.save(task);
+
+    }
 }
