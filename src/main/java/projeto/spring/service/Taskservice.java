@@ -2,6 +2,7 @@ package projeto.spring.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import projeto.spring.dto.TaskDTO;
 import projeto.spring.model.Status;
 import projeto.spring.model.Task;
 import projeto.spring.repository.TaskRepository;
@@ -18,34 +19,44 @@ public class Taskservice {
     public List<Task> listar() {
         return taskRepository.findAll();
     }
-      public Task salvar(Task task) {
-        task.setCreatedAt(LocalDateTime.now());
+
+    public Task salvar(TaskDTO taskDTO) {
+        taskDTO.setCreatedAt(LocalDateTime.now());
+        Task task = new Task();
+
+        task.setTitle(taskDTO.getTitle());
+        task.setDescription(taskDTO.getDescription());
+        task.setStatus(taskDTO.getStatus());
+
         return taskRepository.save(task);
 
     }
-     public Task deletar(String id) {
+
+    public Task deletar(String id) {
         if (id != null) {
             taskRepository.deleteById(id);
         }
         return null;
 
     }
-    public Optional<Task> buscarPorId(String id){
+
+    public Optional<Task> buscarPorId(String id) {
         return taskRepository.findById(id);
     }
-    public Task atualizar(String id, Task task){
+
+    public Task atualizar(String id, TaskDTO taskDTO) {
         Task task1 = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        if(task.getStatus() != null){
-            task1.setStatus(task.getStatus());
+        if (taskDTO.getStatus() != null) {
+            task1.setStatus(taskDTO.getStatus());
         }
 
-        if(task.getTitle() != null){
-            task1.setTitle(task.getTitle());
+        if (taskDTO.getTitle() != null) {
+            task1.setTitle(taskDTO.getTitle());
         }
 
-        if(task.getDescription() != null){
-            task1.setDescription(task.getDescription());
+        if (taskDTO.getDescription() != null) {
+            task1.setDescription(taskDTO.getDescription());
         }
         return taskRepository.save(task1);
 
