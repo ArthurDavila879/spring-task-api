@@ -31,4 +31,8 @@ public class TaskController {
         taskservice.deletar(id);
         return null;
     }
+     @GetMapping("/{id}")
+    public Optional<Task> buscarPorId(@PathVariable String id){
+        return taskservice.buscarPorId(id);
+    }
 }

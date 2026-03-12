@@ -30,4 +30,7 @@ public class Taskservice {
         return null;
 
     }
+    public Optional<Task> buscarPorId(String id){
+        return taskRepository.findById(id);
+    }
 }
