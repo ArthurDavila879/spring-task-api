@@ -41,7 +41,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public Task atualizar(@PathVariable String id, @RequestBody Task task) {
-        return taskservice.atualizar(id, task);
+    public Task atualizar(@PathVariable String id, @RequestBody TaskDTO taskDTO) {
+        return taskservice.atualizar(id, taskDTO);
     }
 }
