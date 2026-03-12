@@ -33,4 +33,21 @@ public class Taskservice {
     public Optional<Task> buscarPorId(String id){
         return taskRepository.findById(id);
     }
+    public Task atualizar(String id, Task task){
+        Task task1 = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        if(task.getStatus() != null){
+            task1.setStatus(task.getStatus());
+        }
+
+        if(task.getTitle() != null){
+            task1.setTitle(task.getTitle());
+        }
+
+        if(task.getDescription() != null){
+            task1.setDescription(task.getDescription());
+        }
+        return taskRepository.save(task1);
+
+    }
 }

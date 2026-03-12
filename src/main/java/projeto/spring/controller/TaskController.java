@@ -35,4 +35,8 @@ public class TaskController {
     public Optional<Task> buscarPorId(@PathVariable String id){
         return taskservice.buscarPorId(id);
     }
+       @PutMapping("/{id}")
+    public Task atualizar(@PathVariable String id, @RequestBody Task task){
+        return taskservice.atualizar(id,task);
+    }
 }
