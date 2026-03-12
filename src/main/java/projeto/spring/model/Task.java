@@ -48,6 +48,7 @@ public class Task {
         this.description = description;
     }
 
-    public void setCreatedAt(LocalDateTime now) {
-    }
+    public LocalDateTime getCreatedAt() {return createdAt;}
+
+    public void setCreatedAt(LocalDateTime createdAt) {this.createdAt = createdAt;}
 }

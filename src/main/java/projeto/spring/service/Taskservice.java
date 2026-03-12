@@ -21,13 +21,11 @@ public class Taskservice {
     }
 
     public Task salvar(TaskDTO taskDTO) {
-        taskDTO.setCreatedAt(LocalDateTime.now());
         Task task = new Task();
-
         task.setTitle(taskDTO.getTitle());
         task.setDescription(taskDTO.getDescription());
         task.setStatus(taskDTO.getStatus());
-
+        task.setCreatedAt((LocalDateTime.now()));
         return taskRepository.save(task);
 
     }
