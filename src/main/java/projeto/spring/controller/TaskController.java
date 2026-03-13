@@ -1,5 +1,6 @@
 package projeto.spring.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import projeto.spring.dto.TaskDTO;
@@ -25,23 +26,23 @@ public class TaskController {
     }
 
     @PostMapping
-    public Task salvar(@RequestBody TaskDTO taskDTO) {
+    public Task salvar(@RequestBody @Valid TaskDTO taskDTO) {
         return taskservice.salvar(taskDTO);
     }
 
     @DeleteMapping("/{id}")
-    public Task deletar(@PathVariable String id) {
+    public Task deletar(@PathVariable @Valid String id) {
         taskservice.deletar(id);
         return null;
     }
 
     @GetMapping("/{id}")
-    public Optional<Task> buscarPorId(@PathVariable String id) {
+    public Optional<Task> buscarPorId(@PathVariable @Valid String id) {
         return taskservice.buscarPorId(id);
     }
 
     @PutMapping("/{id}")
-    public Task atualizar(@PathVariable String id, @RequestBody TaskDTO taskDTO) {
+    public Task atualizar(@PathVariable String id, @RequestBody @Valid TaskDTO taskDTO) {
         return taskservice.atualizar(id, taskDTO);
     }
 }

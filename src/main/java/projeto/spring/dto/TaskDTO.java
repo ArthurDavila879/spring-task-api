@@ -1,14 +1,22 @@
 package projeto.spring.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import projeto.spring.model.Status;
 
 import java.time.LocalDateTime;
 
 public class TaskDTO {
 
+    @NotBlank
     private String title;
+
+    @NotBlank
     private String description;
+
+    @NotNull
     private Status status;
+
     public String getTitle() {
         return title;
     }
