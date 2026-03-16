@@ -142,7 +142,3 @@ Este projeto foi desenvolvido para:
 * Aplicar conceitos de arquitetura em camadas
 * Trabalhar com persistência de dados utilizando JPA
 * Utilizar controle de versão com Git e GitHub
-
-
-LinkedIn: https://www.linkedin.com/in/arthur-d-avila-7514a034b/
-GitHub: https://github.com/ArthurDavila879
