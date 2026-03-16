@@ -6,6 +6,9 @@ O projeto implementa operações CRUD completas, permitindo criar, listar, atual
 Este projeto foi desenvolvido com o objetivo de praticar conceitos de **desenvolvimento backend, arquitetura em camadas e APIs REST**.
 
 ---
+<img width="1073" height="342" alt="image" src="https://github.com/user-attachments/assets/d7223838-446f-40b4-9772-6ba52a7a0d41" />
+
+---
 
 ## Tecnologias utilizadas
 
