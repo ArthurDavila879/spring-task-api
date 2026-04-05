@@ -38,4 +38,8 @@ public class User {
    public void inserirTask(Task task){
        this.listTasks.add(task);
    }
+
+    public List<Task> getListTasks() {
+        return listTasks;
+    }
 }

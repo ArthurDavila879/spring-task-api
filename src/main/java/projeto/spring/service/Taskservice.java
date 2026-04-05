@@ -32,12 +32,12 @@ public class Taskservice {
 
     public TaskResponseDto salvar(TaskRequestDto taskRequestDto) {
         Task task = new Task();
-        task.setTitle(taskRequestDto.getTitle());
-        task.setDescription(taskRequestDto.getDescription());
-        task.setStatus(taskRequestDto.getStatus());
+        task.setTitle(taskRequestDto.title());
+        task.setDescription(taskRequestDto.description());
+        task.setStatus(taskRequestDto.status());
         task.setCreatedAt((LocalDateTime.now()));
 
-        User user = userRepository.findById(taskRequestDto.getIdUser()).orElseThrow( () -> new RuntimeException("Erro ao encontrar usuario"));
+        User user = userRepository.findById(taskRequestDto.idUser()).orElseThrow( () -> new RuntimeException("Erro ao encontrar usuario"));
         task.setUser(user);
 
         user.inserirTask(task);
@@ -62,19 +62,24 @@ public class Taskservice {
     public TaskResponseDto atualizar(Long id, TaskRequestDto taskRequestDto) {
         Task task1 = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        if (taskRequestDto.getStatus() != null) {
-            task1.setStatus(taskRequestDto.getStatus());
+        if (taskRequestDto.status() != null) {
+            task1.setStatus(taskRequestDto.status());
         }
 
-        if (taskRequestDto.getTitle() != null) {
-            task1.setTitle(taskRequestDto.getTitle());
+        if (taskRequestDto.title() != null) {
+            task1.setTitle(taskRequestDto.title());
         }
 
-        if (taskRequestDto.getDescription() != null) {
-            task1.setDescription(taskRequestDto.getDescription());
+        if (taskRequestDto.description() != null) {
+            task1.setDescription(taskRequestDto.description());
         }
 
         return (new TaskResponseDto(task1.getId(),task1.getTitle()));
+
+    }
+    public List<TaskResponseDto> getByUser(Long id){
+        User user = userRepository.findById(id).orElseThrow(()->new RuntimeException("Erro ao encontrar usuario"));
+        return user.getListTasks().stream().map(task -> new TaskResponseDto(task.getId(),task.getTitle())).toList();
 
     }
 }

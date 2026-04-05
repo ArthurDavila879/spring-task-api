@@ -7,18 +7,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-public class UserRequestDto {
-    @NotBlank
-    private String name;
+public record UserRequestDto (
+     String name,
 
     @Email
     @NotBlank
-    private String email;
+     String email,
 
     @NotBlank
-    private String password;
-
-}
+     String password
+)
+{}

@@ -26,9 +26,9 @@ public class UserService {
 
     public UserResponseDto saveUser(UserRequestDto dto) {
         User user = new User();
-        user.setName(dto.getName());
-        user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
+        user.setName(dto.name());
+        user.setEmail(dto.email());
+        user.setPassword(dto.password());
 
         User savedUser = userRepository.save(user);
 
@@ -39,14 +39,14 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-        if (dto.getName() != null){
-            user.setName(dto.getName());
+        if (dto.name() != null){
+            user.setName(dto.name());
         }
-        if (dto.getEmail() != null){
-            user.setEmail(dto.getEmail());
+        if (dto.email() != null){
+            user.setEmail(dto.email());
         }
-        if (dto.getPassword() != null){
-            user.setPassword(dto.getPassword());
+        if (dto.password() != null){
+            user.setPassword(dto.password());
         }
         User userSaved = userRepository.save(user);
 

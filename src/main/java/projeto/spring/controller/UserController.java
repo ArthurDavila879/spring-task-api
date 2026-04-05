@@ -20,11 +20,11 @@ public class UserController {
         return userService.getUsers();
     }
     @PostMapping
-    public UserResponseDto postUser(@RequestBody @Valid UserRequestDto dto){
+    public UserResponseDto postUser( @Valid @RequestBody UserRequestDto dto){
         return userService.saveUser(dto);
     }
     @PutMapping(value = "/{id}")
-    public UserResponseDto postUser(@PathVariable Long id, @RequestBody UserRequestDto dto){
+    public UserResponseDto postUser(@PathVariable  Long id,  @RequestBody UserRequestDto dto){
         return userService.putUser(id,dto);
     }
 }

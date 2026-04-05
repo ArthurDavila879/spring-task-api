@@ -4,10 +4,5 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-public class TaskResponseDto {
-    private Long id;
-    private String title;
-}
+
+public record TaskResponseDto( Long id,String title){}

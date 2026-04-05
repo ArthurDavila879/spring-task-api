@@ -25,7 +25,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public TaskResponseDto salvar(@RequestBody @Valid TaskRequestDto taskRequestDto) {
+    public TaskResponseDto salvar(@Valid @RequestBody TaskRequestDto taskRequestDto) {
         return taskservice.salvar(taskRequestDto);
     }
 
@@ -41,7 +41,12 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public TaskResponseDto atualizar(@PathVariable Long id, @RequestBody @Valid TaskRequestDto taskRequestDto) {
+    public TaskResponseDto atualizar(@PathVariable  Long id, @RequestBody @Valid TaskRequestDto taskRequestDto) {
         return taskservice.atualizar(id, taskRequestDto);
+    }
+
+    @GetMapping("/user/{id}")
+    public List<TaskResponseDto> getByUser(@PathVariable Long id){
+        return taskservice.getByUser(id);
     }
 }
