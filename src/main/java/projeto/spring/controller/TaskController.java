@@ -3,14 +3,13 @@ package projeto.spring.controller;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import projeto.spring.dto.TaskDTO;
-import projeto.spring.model.Status;
+import projeto.spring.dto.TaskRequestDto;
+import projeto.spring.dto.TaskResponseDto;
 import projeto.spring.model.Task;
 import projeto.spring.service.Taskservice;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 
 @RestController()
@@ -21,28 +20,28 @@ public class TaskController {
     private Taskservice taskservice;
 
     @GetMapping
-    public List<Task> listar() {
+    public List<TaskResponseDto> listar() {
         return taskservice.listar();
     }
 
     @PostMapping
-    public Task salvar(@RequestBody @Valid TaskDTO taskDTO) {
-        return taskservice.salvar(taskDTO);
+    public TaskResponseDto salvar(@RequestBody @Valid TaskRequestDto taskRequestDto) {
+        return taskservice.salvar(taskRequestDto);
     }
 
     @DeleteMapping("/{id}")
-    public Task deletar(@PathVariable @Valid String id) {
+    public TaskResponseDto deletar(@PathVariable @Valid Long id) {
         taskservice.deletar(id);
         return null;
     }
 
     @GetMapping("/{id}")
-    public Optional<Task> buscarPorId(@PathVariable @Valid String id) {
+    public TaskResponseDto buscarPorId(@PathVariable @Valid Long id) {
         return taskservice.buscarPorId(id);
     }
 
     @PutMapping("/{id}")
-    public Task atualizar(@PathVariable String id, @RequestBody @Valid TaskDTO taskDTO) {
-        return taskservice.atualizar(id, taskDTO);
+    public TaskResponseDto atualizar(@PathVariable Long id, @RequestBody @Valid TaskRequestDto taskRequestDto) {
+        return taskservice.atualizar(id, taskRequestDto);
     }
 }
