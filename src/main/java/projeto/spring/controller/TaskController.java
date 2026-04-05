@@ -5,11 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import projeto.spring.dto.TaskRequestDto;
 import projeto.spring.dto.TaskResponseDto;
-import projeto.spring.model.Task;
 import projeto.spring.service.Taskservice;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController()
@@ -46,7 +44,7 @@ public class TaskController {
     }
 
     @GetMapping("/user/{id}")
-    public List<TaskResponseDto> getByUser(@PathVariable Long id){
+    public List<TaskResponseDto> getByUser(@PathVariable String id){
         return taskservice.getByUser(id);
     }
 }

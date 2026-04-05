@@ -1,11 +1,11 @@
 package projeto.spring.dto;
 
 
-import projeto.spring.model.Status;
+import projeto.spring.model.task.Status;
 
 public record TaskRequestDto (
      String title,
      String description,
      Status status,
-     Long idUser
+     String idUser
 ){}

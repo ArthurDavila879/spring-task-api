@@ -4,15 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import projeto.spring.dto.TaskRequestDto;
 import projeto.spring.dto.TaskResponseDto;
-import projeto.spring.dto.UserResponseDto;
-import projeto.spring.model.Task;
-import projeto.spring.model.User;
+import projeto.spring.model.task.Task;
+import projeto.spring.model.user.User;
 import projeto.spring.repository.TaskRepository;
 import projeto.spring.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class Taskservice {
@@ -24,7 +22,7 @@ public class Taskservice {
     private UserRepository userRepository;
 
     public List<TaskResponseDto> listar() {
-       return taskRepository.findAll().stream()
+        return taskRepository.findAll().stream()
                 .map(task -> new TaskResponseDto(task.getId(), task.getTitle()))
                 .toList();
 
@@ -37,12 +35,10 @@ public class Taskservice {
         task.setStatus(taskRequestDto.status());
         task.setCreatedAt((LocalDateTime.now()));
 
-        User user = userRepository.findById(taskRequestDto.idUser()).orElseThrow( () -> new RuntimeException("Erro ao encontrar usuario"));
+        User user = userRepository.findById(taskRequestDto.idUser()).orElseThrow(() -> new RuntimeException("Erro ao encontrar usuario"));
         task.setUser(user);
-
-        user.inserirTask(task);
         taskRepository.save(task);
-        return (new TaskResponseDto(task.getId(),task.getTitle()));
+        return (new TaskResponseDto(task.getId(), task.getTitle()));
 
     }
 
@@ -55,8 +51,8 @@ public class Taskservice {
     }
 
     public TaskResponseDto buscarPorId(Long id) {
-        Task task = taskRepository.findById(id).orElseThrow(()->new RuntimeException("Erro ao encontrar usuario"));
-        return (new TaskResponseDto(task.getId(),task.getTitle()));
+        Task task = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Erro ao encontrar usuario"));
+        return (new TaskResponseDto(task.getId(), task.getTitle()));
     }
 
     public TaskResponseDto atualizar(Long id, TaskRequestDto taskRequestDto) {
@@ -74,12 +70,13 @@ public class Taskservice {
             task1.setDescription(taskRequestDto.description());
         }
 
-        return (new TaskResponseDto(task1.getId(),task1.getTitle()));
+        return (new TaskResponseDto(task1.getId(), task1.getTitle()));
 
     }
-    public List<TaskResponseDto> getByUser(Long id){
-        User user = userRepository.findById(id).orElseThrow(()->new RuntimeException("Erro ao encontrar usuario"));
-        return user.getListTasks().stream().map(task -> new TaskResponseDto(task.getId(),task.getTitle())).toList();
+
+    public List<TaskResponseDto> getByUser(String id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Erro ao encontrar usuario"));
+        return user.getListTasks().stream().map(task -> new TaskResponseDto(task.getId(), task.getTitle())).toList();
 
     }
 }

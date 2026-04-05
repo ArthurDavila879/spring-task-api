@@ -1,9 +1,10 @@
-package projeto.spring.model;
+package projeto.spring.model.task;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import projeto.spring.model.user.User;
 
 import java.time.LocalDateTime;
 
