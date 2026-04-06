@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import projeto.spring.dto.AuthenticationDto;
+import projeto.spring.dto.LoginResponseDTO;
 import projeto.spring.dto.RegisterDto;
 import projeto.spring.model.user.User;
 import projeto.spring.repository.UserRepository;
+import projeto.spring.security.SecurityFilter;
+import projeto.spring.security.TokenService;
 
 @RestController
 @RequestMapping("/auth")
@@ -25,11 +28,15 @@ public class AuthenticationController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDto data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
-        return ResponseEntity.ok().build();
+        var token = tokenService.generateToken((User) auth.getPrincipal());
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
     @PostMapping("/register")
