@@ -26,7 +26,15 @@ public class User implements UserDetails {
     private String login;
     private String password;
     private UserRole role;
+
+    @OneToMany(mappedBy = "user")
     private List<Task> listTasks;
+
+    public User(String login, String password, UserRole role) {
+        this.login = login;
+        this.password = password;
+        this.role = role;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
