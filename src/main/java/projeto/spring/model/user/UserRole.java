@@ -1,5 +1,6 @@
 package projeto.spring.model.user;
 
+
 public enum UserRole {
     ADMIN("admin"),
     USER("user");
