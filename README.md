@@ -1,147 +1,157 @@
-# Task Manager API
+# Spring Task API
 
-API REST desenvolvida em **Java com Spring Boot** para gerenciamento de tarefas.
-O projeto implementa operações CRUD completas, permitindo criar, listar, atualizar e remover tarefas.
+Uma API REST construída com **Java 21 + Spring Boot** para gerenciamento de usuários, autenticação e tarefas.
 
-Este projeto foi desenvolvido com o objetivo de praticar conceitos de **desenvolvimento backend, arquitetura em camadas e APIs REST**.
+Este projeto demonstra:
+- Arquitetura backend em camadas (Controller → Service → Repository → Database)
+- Autenticação baseada em JWT com Spring Security
+- Autorização baseada em papéis (roles)
+- Persistência em MySQL com Spring Data JPA
 
----
-<img width="1073" height="342" alt="image" src="https://github.com/user-attachments/assets/d7223838-446f-40b4-9772-6ba52a7a0d41" />
+## Tecnologias
 
----
+- Java 21
+- Spring Boot 4
+- Spring Web MVC
+- Spring Data JPA
+- Spring Security
+- JWT (`java-jwt`)
+- MySQL
+- Maven
+- Lombok
 
-## Tecnologias utilizadas
+## Estrutura do Projeto
 
-* Java
-* Spring Boot
-* Spring Data JPA
-* MySQL
-* Lombok
-* Maven
-
----
-
-## Arquitetura do Projeto
-
-O projeto segue uma arquitetura em camadas:
-
-```
-Controller → Service → Repository → Database
-```
-
-Estrutura de pastas:
-
-```
-src/main/java
-│
+```text
+src/main/java/projeto/spring
 ├── controller
-│   └── TaskController
-│
-├── service
-│   └── TaskService
-│
-├── repository
-│   └── TaskRepository
-│
+│   ├── AuthenticationController.java
+│   ├── TaskController.java
+│   └── UserController.java
+├── dto
 ├── model
-│   └── Task
-│
-└── dto
-    └── TaskDTO
+│   ├── task
+│   └── user
+├── repository
+├── security
+└── service
 ```
 
----
+## Funcionalidades Principais
 
-## Funcionalidades da API
+- Registro e login de usuários
+- Geração e validação de token JWT
+- Endpoints protegidos usando `Authorization: Bearer <token>`
+- Operações CRUD de tarefas
+- Busca de tarefas por usuário
+- Endpoints básicos de listagem e atualização de usuários
 
-* Criar tarefa
-* Listar todas as tarefas
-* Buscar tarefa por ID
-* Atualizar tarefa
-* Deletar tarefa
+## Segurança e Papéis
 
----
+A API é stateless e protegida por um filtro JWT.
 
-## Endpoints
+### Endpoints públicos
+- `POST /auth/login`
+- `POST /auth/register`
 
-### Criar tarefa
+### Endpoints restritos
+- `POST /tasks` exige papel `ADMIN`
+- `POST /users` exige papel `ADMIN`
+- Todos os demais endpoints exigem autenticação
 
-POST /tasks
+Papéis disponíveis:
+- `ADMIN`
+- `USER`
 
-Exemplo de requisição:
+## Endpoints da API
 
+### Autenticação
+- `POST /auth/register`
+- `POST /auth/login`
+
+#### Exemplo de registro
 ```json
 {
-  "title": "Estudar Spring Boot",
-  "description": "Criar uma API REST",
-  "status": "TODO"
+  "login": "admin",
+  "password": "123456",
+  "role": "ADMIN"
 }
 ```
 
----
-
-### Listar tarefas
-
-GET /tasks
-
-Resposta:
-
-```json
-[
-  {
-    "id": "uuid",
-    "title": "Estudar Spring Boot",
-    "description": "Criar uma API REST",
-    "status": "TODO"
-  }
-]
-```
-
----
-
-### Buscar tarefa por ID
-
-GET /tasks/{id}
-
----
-
-### Atualizar tarefa
-
-PUT /tasks/{id}
-
-Exemplo:
-
+#### Exemplo de login
 ```json
 {
-  "status": "DONE"
+  "login": "admin",
+  "password": "123456"
 }
 ```
 
----
+### Usuários
+- `GET /users`
+- `POST /users`
+- `PUT /users/{id}`
 
-### Deletar tarefa
+### Tarefas
+- `GET /tasks`
+- `POST /tasks`
+- `GET /tasks/{id}`
+- `PUT /tasks/{id}`
+- `DELETE /tasks/{id}`
+- `GET /tasks/user/{id}`
 
-DELETE /tasks/{id}
-
----
-
-## Testando a API
-
-As requisições podem ser testadas utilizando o **Postman** ou qualquer cliente HTTP.
-
-Base URL:
-
+#### Exemplo de criação de tarefa
+```json
+{
+  "title": "Estudar Spring Security",
+  "description": "Implementar autenticação JWT",
+  "status": "TODO",
+  "idUser": "<uuid-do-usuario>"
+}
 ```
-http://localhost:8080/tasks
+
+Valores possíveis para status:
+- `TODO`
+- `IN_PROGRESS`
+- `DONE`
+
+## Configuração Local
+
+### 1) Clone o repositório
+```bash
+git clone <url-do-seu-repositorio>
+cd spring-task-api
 ```
 
----
+### 2) Configure banco de dados e segredo
+Atualize `src/main/resources/application.properties` conforme necessário:
 
-## Objetivo do projeto
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/***
+spring.datasource.username=***
+spring.datasource.password=***
+api.security.token.secret=<SEU_SEGREDO>
+```
 
-Este projeto foi desenvolvido para:
+> Observação: no arquivo atual, o segredo é lido de `${CHAVE-API}`.
 
-* Praticar desenvolvimento de APIs REST
-* Aplicar conceitos de arquitetura em camadas
-* Trabalhar com persistência de dados utilizando JPA
-* Utilizar controle de versão com Git e GitHub
+### 3) Execute a aplicação
+Usando o Maven Wrapper:
+
+```bash
+./mvnw spring-boot:run
+```
+
+A API ficará disponível em:
+- `http://localhost:8080`
+
+## Build e Testes
+
+```bash
+./mvnw clean test
+./mvnw clean package
+```
+
+## Observações
+
+- O esquema do banco é gerenciado via `spring.jpa.hibernate.ddl-auto=update`.
+- Atualmente, os endpoints de tarefas retornam uma resposta compacta (`id` e `title`).
