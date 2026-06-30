@@ -29,10 +29,10 @@ public class UserService {
         user.setLogin(dto.login());
         user.setPassword(dto.password());
 
-        User savedUser = userRepository.save(user);
+        userRepository.save(user);
 
 
-        return new UserResponseDto(savedUser.getId(), savedUser.getLogin());
+        return new UserResponseDto(user.getId(), user.getLogin());
     }
     public UserResponseDto putUser(String id,UserRequestDto dto){
         User user = userRepository.findById(id)
@@ -45,8 +45,8 @@ public class UserService {
         if (dto.password() != null){
             user.setPassword(dto.password());
         }
-        User userSaved = userRepository.save(user);
+        userRepository.save(user);
 
-        return new UserResponseDto(userSaved.getId(), userSaved.getLogin());    }
+        return new UserResponseDto(user.getId(), user.getLogin());    }
 
 }
