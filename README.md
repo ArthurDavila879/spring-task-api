@@ -19,6 +19,8 @@ Este projeto demonstra:
 - MySQL
 - Maven
 - Lombok
+- Springdoc OpenAPI (Swagger UI)
+- JUnit 5 + Mockito (testes unitários)
 
 ## Estrutura do Projeto
 
@@ -44,7 +46,9 @@ src/main/java/projeto/spring
 - Endpoints protegidos usando `Authorization: Bearer <token>`
 - Operações CRUD de tarefas
 - Busca de tarefas por usuário
-- Endpoints básicos de listagem e atualização de usuários
+- Listagem de usuários
+- Documentação interativa da API via Swagger UI
+- Cobertura de testes unitários (services e repositories) com JUnit 5 e Mockito
 
 ## Segurança e Papéis
 
@@ -56,7 +60,6 @@ A API é stateless e protegida por um filtro JWT.
 
 ### Endpoints restritos
 - `POST /tasks` exige papel `ADMIN`
-- `POST /users` exige papel `ADMIN`
 - Todos os demais endpoints exigem autenticação
 
 Papéis disponíveis:
@@ -88,8 +91,8 @@ Papéis disponíveis:
 
 ### Usuários
 - `GET /users`
-- `POST /users`
-- `PUT /users/{id}`
+
+> A criação de usuários é feita exclusivamente via `POST /auth/register`, garantindo que a senha sempre passe pelo hash BCrypt antes de ser persistida.
 
 ### Tarefas
 - `GET /tasks`
@@ -144,12 +147,19 @@ Usando o Maven Wrapper:
 A API ficará disponível em:
 - `http://localhost:8080`
 
+### Documentação interativa (Swagger)
+
+Com a aplicação rodando, a documentação da API pode ser acessada em:
+- `http://localhost:8080/swagger-ui/index.html`
+
 ## Build e Testes
 
 ```bash
 ./mvnw clean test
 ./mvnw clean package
 ```
+
+O projeto conta com testes unitários para a camada de serviço (`Taskservice`, `UserService`) e testes de integração para os repositórios (`TaskRepository`, `UserRepository`), utilizando **JUnit 5** e **Mockito**.
 
 ## Observações
 
