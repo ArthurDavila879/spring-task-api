@@ -24,29 +24,4 @@ public class UserService {
 
     }
 
-    public UserResponseDto saveUser(UserRequestDto dto) {
-        User user = new User();
-        user.setLogin(dto.login());
-        user.setPassword(dto.password());
-
-        User savedUser = userRepository.save(user);
-
-
-        return new UserResponseDto(savedUser.getId(), savedUser.getLogin());
-    }
-    public UserResponseDto putUser(String id,UserRequestDto dto){
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-
-        if (dto.login() != null){
-            user.setLogin(dto.login());
-        }
-
-        if (dto.password() != null){
-            user.setPassword(dto.password());
-        }
-        User userSaved = userRepository.save(user);
-
-        return new UserResponseDto(userSaved.getId(), userSaved.getLogin());    }
-
 }

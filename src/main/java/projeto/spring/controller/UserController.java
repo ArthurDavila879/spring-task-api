@@ -19,12 +19,4 @@ public class UserController {
     public List<UserResponseDto> getUser(){
         return userService.getUsers();
     }
-    @PostMapping
-    public UserResponseDto postUser( @Valid @RequestBody UserRequestDto dto){
-        return userService.saveUser(dto);
-    }
-    @PutMapping(value = "/{id}")
-    public UserResponseDto postUser(@PathVariable  String id,  @RequestBody UserRequestDto dto){
-        return userService.putUser(id,dto);
-    }
 }

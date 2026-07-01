@@ -69,7 +69,7 @@ public class Taskservice {
         if (taskRequestDto.description() != null) {
             task1.setDescription(taskRequestDto.description());
         }
-
+        taskRepository.save(task1);
         return (new TaskResponseDto(task1.getId(), task1.getTitle()));
 
     }
