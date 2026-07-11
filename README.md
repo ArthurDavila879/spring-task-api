@@ -21,6 +21,7 @@ Este projeto demonstra:
 - Lombok
 - Springdoc OpenAPI (Swagger UI)
 - JUnit 5 + Mockito (testes unitários)
+- Docker & Docker Compose
 
 ## Estrutura do Projeto
 
@@ -135,7 +136,7 @@ spring.datasource.password=***
 api.security.token.secret=<SEU_SEGREDO>
 ```
 
-> Observação: no arquivo atual, o segredo é lido de `${CHAVE-API}`.
+> Observação: no arquivo atual, o segredo é lido de `${JWT_SECRET}`.
 
 ### 3) Execute a aplicação
 Usando o Maven Wrapper:
@@ -160,6 +161,44 @@ Com a aplicação rodando, a documentação da API pode ser acessada em:
 ```
 
 O projeto conta com testes unitários para a camada de serviço (`Taskservice`, `UserService`) e testes de integração para os repositórios (`TaskRepository`, `UserRepository`), utilizando **JUnit 5** e **Mockito**.
+
+## Rodando com Docker
+
+Como alternativa à configuração local, o projeto pode ser executado inteiramente via Docker, sem precisar instalar Java, Maven ou MySQL na máquina.
+
+### Pré-requisitos
+- Docker
+- Docker Compose
+
+### 1) Crie o arquivo `.env`
+
+Na raiz do projeto, crie um arquivo `.env` com as variáveis sensíveis:
+
+```env
+JWT_SECRET=seu_segredo_aqui
+DB_PASSWORD=sua_senha_aqui
+```
+
+### 2) Suba os containers
+
+```bash
+docker compose up --build
+```
+
+Esse comando builda a imagem da aplicação (via multi-stage build: JDK 21 para compilar, JRE para rodar) e sobe dois containers: a API e o banco MySQL, já conectados entre si.
+
+A API ficará disponível em `http://localhost:8080`, e o Swagger em `http://localhost:8080/swagger-ui/index.html`, como na execução local.
+
+### Comandos úteis
+
+| Comando | Descrição |
+|---|---|
+| `docker compose up --build` | Builda e sobe a aplicação e o banco |
+| `docker compose down` | Para os containers (mantém os dados) |
+| `docker compose down -v` | Para os containers e apaga os dados do banco |
+| `docker compose logs -f app` | Acompanha os logs da aplicação em tempo real |
+
+> Os dados do MySQL são persistidos em um volume Docker (`mysql_data`), sobrevivendo a reinicializações dos containers.
 
 ## Observações
 
